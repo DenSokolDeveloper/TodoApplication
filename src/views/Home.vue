@@ -2,7 +2,6 @@
   <div>
     <h1>Todo application</h1>
     <hr>
-
     <CardsList />
   </div>
 </template>

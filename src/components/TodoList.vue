@@ -1,9 +1,13 @@
 <template>
   <ul class="todo-list">
     <TodoItem
-            v-for="todo in todo.slice(0,4)" :key="todo.id"
+            v-for="(todo, i) in todo" :key="todo.id"
             v-bind:todo="todo"
+            v-bind:idCard="idCard"
+            v-bind:number="i"
+            v-bind:isDisabled="isDisabled"
     />
+
   </ul>
 </template>
 
@@ -16,11 +20,21 @@ export default {
     todo: {
       type: Array,
       required: true
+    },
+    idCard: Number,
+    isDisabled: {
+      type: Boolean
     }
   },
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+  .todo-list {
+    margin-top: 1rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
 
 </style>

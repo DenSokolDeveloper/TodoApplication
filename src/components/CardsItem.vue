@@ -3,7 +3,9 @@
     <span class="close" @click="showModal">&times;</span>
     <h3 class="list__item__title">{{card.title}}</h3>
     <TodoList
-      v-bind:todo="card.todos"
+      v-bind:todo="card.todos.slice(0,4)"
+      v-bind:index="index"
+      v-bind:isDisabled="isDisabled"
     />
     <router-link
             :to="{name: 'edit', params: {id: index+1}}"
@@ -13,7 +15,6 @@
         @close="closeModal"
         v-bind:card="card"
         v-bind:index="index"
-        v-on:remove-card="removeCard"
     />
   </li>
 </template>
@@ -27,19 +28,17 @@ export default {
   props: {
     card: {
       type: Object,
-      required: true
+      // required: true
     },
     index: Number
   },
   data () {
     return {
       isModalVisible: false,
+      isDisabled: true
     };
   },
   methods: {
-    removeCard(id) {
-      this.$emit('remove-card', id)
-    },
     showModal() {
       this.isModalVisible = true;
     },
@@ -92,4 +91,5 @@ export default {
     }
   }
 }
+
 </style>

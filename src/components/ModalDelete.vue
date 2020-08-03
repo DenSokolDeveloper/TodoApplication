@@ -10,8 +10,19 @@
                 class="modal-header"
                 id="modalTitle"
         >
-          <slot name="header">
-            Вы уверены что хотите удалить?
+          <slot name="header" v-if="card">
+            Вы уверены что хотите удалить эту заметку?
+            <button
+                    type="button"
+                    class="btn-close"
+                    @click="close"
+                    aria-label="Close modal"
+            >
+              x
+            </button>
+          </slot>
+          <slot name="header" v-else-if="todo">
+            Вы уверены что хотите удалить эту задачу?
             <button
                     type="button"
                     class="btn-close"
@@ -25,10 +36,20 @@
         <footer class="modal-footer">
           <slot name="footer">
             <button
+                    v-if="card"
                     type="button"
                     class="btn-green"
-                    @click="close"
-                    v-on:click="$emit('remove-card', index)"
+                    @click="deleteCard(index)"
+                    v-on:click="close"
+            >
+              Да, уверен
+            </button>
+            <button
+                    v-else-if="todo"
+                    type="button"
+                    class="btn-green"
+                    @click="deleteTodo(number)"
+                    v-on:click="close"
             >
               Да, уверен
             </button>
@@ -40,16 +61,24 @@
 </template>
 
 <script>
+  import {mapMutations} from "vuex"
 export default {
   name: 'ModalDelete',
   props: {
     card: {
       type: Object,
-      required: true
+        // required: true
     },
-    index: Number
+    todo: {
+      type: Object,
+      // required: true
+    },
+    index: Number,
+    idCard: Number,
+    number: Number
   },
   methods: {
+    ...mapMutations(['deleteCard','deleteTodo']),
     close() {
       this.$emit('close');
     },

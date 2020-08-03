@@ -1,11 +1,28 @@
 export default {
     actions: {
-        fetchTodos() {
-
+        SET_CURRENT_CARD_ID({commit}, id){
+            commit('setCurrentId', id);
         }
     },
-    mutations: {},
+    mutations: {
+        createCard(state, newCard) {
+            state.cards.push(newCard)
+        },
+        createTodo(state, newTodo) {
+            state.cards[state.currentCardId].todos.push(newTodo)
+        },
+        deleteCard(state, id) {
+            state.cards.splice(id ,1)
+        },
+        deleteTodo(state,  number) { //удаляет только перывый элемент еще нужно id
+            state.cards[state.currentCardId].todos.splice(number,1)
+        },
+        setCurrentId(state, prop){
+            return state.currentCardId = prop
+        }
+    },
     state: {
+        currentCardId: null,
         cards: [
             {
                 id: 1,
@@ -64,13 +81,7 @@ export default {
                         "id": 9,
                         "title": "molestiae perspiciatis ipsa",
                         "completed": false
-                    },
-                    {
-                        "userId": 1,
-                        "id": 10,
-                        "title": "illo est ratione doloremque quia maiores aut",
-                        "completed": false
-                    },
+                    }
                 ]
             },
             {
@@ -124,20 +135,7 @@ export default {
                         "id": 8,
                         "title": "quo adipisci enim quam ut ab",
                         "completed": false
-                    },
-                    {
-                        "userId": 1,
-                        "id": 9,
-                        "title": "molestiae perspiciatis ipsa",
-                        "completed": false
-                    },
-                    {
-                        "userId": 1,
-                        "id": 10,
-                        "title": "illo est ratione doloremque quia maiores aut",
-                        "completed": false
-                    },
-
+                    }
                 ]
             },
             {
@@ -185,25 +183,7 @@ export default {
                         "id": 7,
                         "title": "illo expedita consequatur quia in",
                         "completed": false
-                    },
-                    {
-                        "userId": 1,
-                        "id": 8,
-                        "title": "quo adipisci enim quam ut ab",
-                        "completed": false
-                    },
-                    {
-                        "userId": 1,
-                        "id": 9,
-                        "title": "molestiae perspiciatis ipsa",
-                        "completed": false
-                    },
-                    {
-                        "userId": 1,
-                        "id": 10,
-                        "title": "illo est ratione doloremque quia maiores aut",
-                        "completed": false
-                    },
+                    }
                 ]
             }
         ],
@@ -211,7 +191,10 @@ export default {
     },
     getters: {
         allCards(state) {
-            return state.cards
+            return state.cards;
         },
+        currentCardId(state){
+            return state.currentCardId;
+        }
     },
 }

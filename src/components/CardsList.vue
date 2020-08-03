@@ -1,34 +1,26 @@
 <template>
   <div>
-    <AddCard
-            @add-card="addCard"
-    />
     <h4>Заметки</h4>
+    <AddEllement />
     <ul class="list">
       <CardsItem
         v-for="(card, i) of allCards"
         v-bind:card="card"
         v-bind:index="i"
-        v-on:remove-card="removeCard"
       />
     </ul>
   </div>
 </template>
 
 <script>
-import AddCard from "../views/AddCard"
+import AddEllement from "@/components/AddEllement"
 import CardsItem from "@/components/CardsItem";
 import {mapGetters} from "vuex"
 export default {
   name: 'CardsList',
-  components: {CardsItem,AddCard},
+  components: {CardsItem,AddEllement},
   methods: {
-    removeCard(id) {
-      this.allCards = this.allCards.splice(id, 1)
-    },
-    addCard(card) {
-      this.allCards.push(card)
-    }
+
   },
   computed: mapGetters(["allCards"]),
   // computed: {
